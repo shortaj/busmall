@@ -9,7 +9,7 @@ var counter = 0
 var imageArray = [];
 
 function maths() {
-  Math.floor(Math.random * imageArray.length);
+  return Math.floor(Math.random()* imageArray.length);
 }
 var left = document.getElementById('left');
 var center = document.getElementById('center');
@@ -58,12 +58,12 @@ var wineGlass = new ImageConstructor('wine-glass.jpg', '20');
 
 function ImageConstructor(src, id) {
   var picture = document.createElement('img')
-  picture.setAttribute('src', 'img/' + src);
+  picture.setAttribute('src', ('img/' + src));
   picture.setAttribute('id', id);
   picture.setAttribute('class', 'hiddenimage');
   picture.clicks = 0;
   picture.shown = 0;
-  imageArray[j] = this;
+  imageArray[j] = picture;
   j++;
 
 }
@@ -96,4 +96,4 @@ function imageClear () {
   imageSpot3.setAttribute('class', 'hiddenimage');
 }
 imagePicker();
-document.getElementsByClassName('image').addEventListener('click',imageCycle())
+document.getElementsByClassName('image').addEventListener('click',imageCycle(event));
