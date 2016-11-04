@@ -148,39 +148,39 @@ function imagePicker() {
       imgHtmlArray[i].setAttribute('class', imageArray[numbers[i]].class);
       div[i].appendChild(imgHtmlArray[i]);
     }
-    left.addEventListener('click', function(event) {
-      console.log('event Listener Fired left ');
+    left.addEventListener('click', function leftClick(event) {
       if (counter < 25) {
         imageArray[numbers[0]].clicks++;
         counter++;
         removeChildren();
+        left.removeEventListener('click', leftClick);
         imagePicker();
       } else {
-        console.log('done');
+        left.removeEventListener('click', leftClick);
         removeChildren();
       }
     });
-    center.addEventListener('click', function(event) {
-      console.log('event Listener Fired center');
+    center.addEventListener('click', function centerClick(event) {
       if (counter < 25) {
         imageArray[numbers[1]].clicks++;
         counter++;
         removeChildren();
+        center.removeEventListener('click', centerClick);
         imagePicker();
       } else {
-        console.log('done');
+        center.removeEventListener('click', centerClick);
         removeChildren();
       }
     });
-    right.addEventListener('click', function(event) {
-      console.log('event Listener Fired rigth');
+    right.addEventListener('click', function rightClick(event) {
       if (counter < 25) {
         imageArray[numbers[2]].clicks++;
         counter++;
         removeChildren();
+        right.removeEventListener('click', rightClick);
         imagePicker();
       } else {
-        console.log('done');
+        right.removeEventListener('click', rightClick);
         removeChildren();
       }
     });
