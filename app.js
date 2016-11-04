@@ -1,72 +1,192 @@
 'use strict';
 
-var i = 0;
-var j = 0;
-var imageSpot1;
-var imageSpot2;
-var imageSpot3;
 var counter = 0
 var imageArray = [];
-
-function maths() {
-  return Math.floor(Math.random()* imageArray.length);
-}
+var imgHtmlArray = [];
+var numbers = [];
 var left = document.getElementById('left');
 var center = document.getElementById('center');
 var right = document.getElementById('right');
+var div = [left, center, right];
+var initialProductInformation = [
+  {
+    filepath: 'img/bag.jpg',
+    name: 'bag',
+    class: 'image'
+  },
+  {
+    filepath: 'img/banana.jpg',
+    name:'banana',
+    class: 'image'
+  },
+  {
+    filepath: 'img/bathroom.jpg',
+    name: 'bathroom',
+    class: 'image'
+  },
+  {
+    filepath: 'img/boots.jpg',
+    name: 'boots',
+    class: 'image'
+  },
+  {
+    filepath:'img/breakfast.jpg',
+    name: 'breakfast',
+    class: 'image'
+  },
+  {
+    filepath: 'img/bubblegum.jpg',
+    name: 'bubblegum',
+    class: 'image'
+  },
+  {
+    filepath: 'img/chair.jpg',
+    name: 'chair',
+    class: 'image'
+  },
+  {
+    filepath: 'img/cthulhu.jpg',
+    name: 'cthulhu',
+    class: 'image'
+  },
+  {
+    filepath: 'img/dog-duck.jpg',
+    name: 'dog-duck',
+    class: 'image'
+  },
+  {
+    filepath: 'img/dragon.jpg',
+    name: 'dragon',
+    class: 'image'
+  },
+  {
+    filepath: 'img/pen.jpg',
+    name: 'pen',
+    class: 'image'
+  },
+  {
+    filepath: 'img/pet-sweep.jpg',
+    name: 'pet-sweep',
+    class: 'image'
+  },
+  {
+    filepath: 'img/scissors.jpg',
+    name: 'scissors',
+    class: 'image'
+  },
+  {
+    filepath: 'img/shark.jpg',
+    name: 'shark',
+    class: 'image'
+  },
+  {
+    filepath: 'img/sweep.png',
+    name: 'sweep',
+    class: 'image'
+  },
+  {
+    filepath: 'img/tauntaun.jpg',
+    name: 'tauntaun',
+    class: 'image'
+  },
+  {
+    filepath: 'img/unicorn.jpg',
+    name: 'unicorn',
+    class: 'image'
+  },
+  {
+    filepath: 'img/usb.gif',
+    name: 'usb',
+    class: 'image'
+  },
+  {
+    filepath: 'img/water-can.jpg',
+    name: 'water-can',
+    class: 'image'
+  },
+  {
+    filepath: 'img/wine-glass.jpg',
+    name: 'wine-glass',
+    class: 'image'
+  }
+];
+
+for (var i = 0; i < initialProductInformation.length; i++) {
+  new Product(initialProductInformation[i]);
+}
+function Product(productInfo) {
+  this.clicks = productInfo.clicks || 0;
+  this.shown = productInfo.shown || 0;
+  this.filepath = productInfo.filepath;
+  this.name = productInfo.name;
+  this.class = productInfo.class;
+  imageArray.push(this);
+}
+function removeChildren() {
+  left.innerHTML = '';
+  center.innerHTML = '';
+  right.innerHTML = '';
+}
+function maths() {
+  var number1 = parseInt(Math.random()* imageArray.length);
+  var number2 = parseInt(Math.random()* imageArray.length);
+  var number3 = parseInt(Math.random()* imageArray.length);
+  return [number1, number2, number3];
+}
 
 function imagePicker() {
-  var imageSpot1 = imageArray[maths()];
-  var imageSpot2 = imageArray[maths()];
-  var imageSpot3 = imageArray[maths()];
-  if ((imageSpot1 === imageSpot2) || (imageSpot1 === imageSpot3) || (imageSpot2 === imageSpot3 )) {
+  var numbers = [];
+  numbers = maths();
+  if ((imageArray[numbers[0]] === imageArray[numbers[1]]) || (imageArray[numbers[0]] === imageArray[numbers[2]]) || (imageArray[numbers[1]] === imageArray[numbers[2]] )) {
     imagePicker();
   } else {
-    imageSpot1.shown ++;
-    imageSpot2.shown ++;
-    imageSpot3.shown ++;
-    imageSpot1.setAttribute('class', 'image');
-    imageSpot2.setAttribute('class', 'image');
-    imageSpot3.setAttribute('class', 'image');
-    left.appendChild(imageSpot1);
-    center.appendChild(imageSpot2);
-    right.appendChild(imageSpot3);
+    for (var i = 0; i < numbers.length; i++) {
+      imageArray[numbers[i]].shown ++;
+      imgHtmlArray[i] = document.createElement('img');
+      imgHtmlArray[i].setAttribute('src', imageArray[numbers[i]].filepath);
+      imgHtmlArray[i].setAttribute('name', imageArray[numbers[i]].name);
+      imgHtmlArray[i].setAttribute('class', imageArray[numbers[i]].class);
+      div[i].appendChild(imgHtmlArray[i]);
+    }
+    left.addEventListener('click', function(event) {
+      console.log('event Listener Fired left ');
+      if (counter < 25) {
+        imageArray[numbers[0]].clicks++;
+        counter++;
+        removeChildren();
+        imagePicker();
+      } else {
+        console.log('done');
+        removeChildren();
+      }
+    });
+    center.addEventListener('click', function(event) {
+      console.log('event Listener Fired center');
+      if (counter < 25) {
+        imageArray[numbers[1]].clicks++;
+        counter++;
+        removeChildren();
+        imagePicker();
+      } else {
+        console.log('done');
+        removeChildren();
+      }
+    });
+    right.addEventListener('click', function(event) {
+      console.log('event Listener Fired rigth');
+      if (counter < 25) {
+        imageArray[numbers[2]].clicks++;
+        counter++;
+        removeChildren();
+        imagePicker();
+      } else {
+        console.log('done');
+        removeChildren();
+      }
+    });
   }
 }
 
-var bag = new ImageConstructor('bag.jpg', '1');
-var banana = new ImageConstructor('banana.jpg', '2');
-var bathroom = new ImageConstructor('bathroom.jpg', '3');
-var boots = new ImageConstructor('boots.jpg', '4');
-var breakfast = new ImageConstructor('breakfast.jpg', '5');
-var bubblegum = new ImageConstructor('bubblegum.jpg', '6');
-var chair = new ImageConstructor('chair.jpg', '7');
-var cthulhu = new ImageConstructor('cthulhu.jpg', '8');
-var dogDuck = new ImageConstructor('dog-duck.jpg', '9');
-var dragon = new ImageConstructor('dragon.jpg', '10');
-var pen = new ImageConstructor('pen.jpg', '11');
-var petSweep = new ImageConstructor('pet-sweep.jpg', '12');
-var scissors = new ImageConstructor('scissors.jpg', '13');
-var shark = new ImageConstructor('shark.png', '14');
-var sweep = new ImageConstructor('sweep.jpg', '15');
-var tauntaun = new ImageConstructor('tauntaun.jpg', '16');
-var unicorn = new ImageConstructor('unicorn.jpg', '17');
-var usb = new ImageConstructor('usb.gif', '18');
-var waterCan = new ImageConstructor('water-can.jpg', '19');
-var wineGlass = new ImageConstructor('wine-glass.jpg', '20');
-
-
-function ImageConstructor(src, id) {
-  var picture = document.createElement('img')
-  picture.setAttribute('src', ('img/' + src));
-  picture.setAttribute('id', id);
-  picture.setAttribute('class', 'hiddenimage');
-  picture.clicks = 0;
-  picture.shown = 0;
-  imageArray[j] = picture;
-  j++;
-
-}
 function HtmlConstructor (tag, type, id, clas) {
   var html = document.createElement(tag);
   html.setAttribute('type', type);
@@ -75,25 +195,4 @@ function HtmlConstructor (tag, type, id, clas) {
 }
 var p = new HtmlConstructor('p', 'text', 'closer', 'text');
 p.innerText = 'You have completed the questionaire! Thanks your time!';
-function imageCycle (){
-  if (counter < 25) {
-    scoreLog();
-    imageClear();
-    imagePicker();
-    counter++;
-  } else {
-    imageClear();
-  }
-}
-
-function scoreLog () {
-  this.clicks ++;
-
-}
-function imageClear () {
-  imageSpot1.setAttribute('class', 'hiddenimage');
-  imageSpot2.setAttribute('class', 'hiddenimage');
-  imageSpot3.setAttribute('class', 'hiddenimage');
-}
 imagePicker();
-document.getElementsByClassName('image').addEventListener('click',imageCycle(event));
