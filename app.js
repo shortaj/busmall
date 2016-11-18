@@ -6,6 +6,7 @@ var imgHtmlArray = [];
 var numbers = [];
 var barChartImageArrayPercent = [];
 var barChartImageArrayName = [];
+var localStorageData = [];
 var left = document.getElementById('left');
 var center = document.getElementById('center');
 var right = document.getElementById('right');
@@ -249,9 +250,11 @@ function percentCalc() {
     imageArray[i].percent = imageArray[i].clicks / imageArray[i].shown * 100;
     console.log('percentCalc ' + i + ': ' + imageArray[i].percent);
   }
+  localStorage['products'] = JSON.stringify(imageArray);
 }
 function sortImageArray() {
-  imageArray.sort(function (a, b) {
+  localStorageData = JSON.parse(localStorage['products']);
+  localStorageData.sort(function (a, b) {
     if (a.percent > b.percent) {
       return -1;
     }
@@ -266,10 +269,9 @@ function pruneImageArray() {
   percentCalc();
   sortImageArray();
   for (var i = 0; i < 5; i++) {
-    barChartImageArrayPercent.push(imageArray[i].percent);
-    barChartImageArrayName.push(imageArray[i].name);
+    barChartImageArrayPercent.push(localStorageData[i].percent);
+    barChartImageArrayName.push(localStorageData[i].name);
   }
-  console.log('Percent: ' + barChartImageArrayPercent);
   barChartCreator();
 }
 
