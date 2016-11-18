@@ -135,7 +135,7 @@ function maths() {
 }
 
 function imagePicker() {
-  var numbers = [];
+  numbers = [];
   numbers = maths();
   if ((imageArray[numbers[0]] === imageArray[numbers[1]]) || (imageArray[numbers[0]] === imageArray[numbers[2]]) || (imageArray[numbers[1]] === imageArray[numbers[2]] )) {
     imagePicker();
@@ -148,51 +148,96 @@ function imagePicker() {
       imgHtmlArray[i].setAttribute('class', imageArray[numbers[i]].class);
       div[i].appendChild(imgHtmlArray[i]);
     }
-    left.addEventListener('click', function leftClick(event) {
-      if (counter < 25) {
-        imageArray[numbers[0]].clicks++;
-        counter++;
-        removeChildren();
-        left.removeEventListener('click', leftClick);
-        imagePicker();
-      } else {
-        left.removeEventListener('click', leftClick);
-        removeChildren();
-      }
-    });
-    center.addEventListener('click', function centerClick(event) {
-      if (counter < 25) {
-        imageArray[numbers[1]].clicks++;
-        counter++;
-        removeChildren();
-        center.removeEventListener('click', centerClick);
-        imagePicker();
-      } else {
-        center.removeEventListener('click', centerClick);
-        removeChildren();
-      }
-    });
-    right.addEventListener('click', function rightClick(event) {
-      if (counter < 25) {
-        imageArray[numbers[2]].clicks++;
-        counter++;
-        removeChildren();
-        right.removeEventListener('click', rightClick);
-        imagePicker();
-      } else {
-        right.removeEventListener('click', rightClick);
-        removeChildren();
-      }
-    });
+    left.addEventListener('click', leftClick);
+    center.addEventListener('click',centerClick);
+    right.addEventListener('click', rightClick);
+  }
+}
+function leftClick() {
+  counter++;
+  console.log('counter: ' + counter);
+  if (counter < 25) {
+    imageArray[numbers[0]].clicks++;
+    removeChildren();
+    left.removeEventListener('click', leftClick);
+    imagePicker();
+  } else {
+    left.removeEventListener('click', leftClick);
+    removeChildren();
+    counter++;
+    tableCreator();
+  }
+}
+function centerClick() {
+  counter++;
+  if (counter < 25) {
+    imageArray[numbers[1]].clicks++;
+    removeChildren();
+    center.removeEventListener('click', centerClick);
+    imagePicker();
+  } else {
+    center.removeEventListener('click', centerClick);
+    removeChildren();
+    counter++;
+    tableCreator();
   }
 }
 
-function HtmlConstructor (tag, type, id, clas) {
-  var html = document.createElement(tag);
-  html.setAttribute('type', type);
-  html.setAttribute('id', id);
-  html.setAttribute('class', clas);
+function rightClick() {
+  counter++;
+  if (counter < 25) {
+    imageArray[numbers[2]].clicks++;
+    removeChildren();
+    right.removeEventListener('click', rightClick);
+    imagePicker();
+  } else {
+    right.removeEventListener('click', rightClick);
+    removeChildren();
+    counter++;
+    tableCreator();
+  }
 }
-var p = new HtmlConstructor('p', 'text', 'closer', 'text');
+var p = document.createElement('p');
 p.innerText = 'You have completed the questionaire! Thanks your time!';
+function tableCreator() {
+  var table = document.createElement('table');
+  table.setAttribute('class', 'scoreTable');
+  // var body = document.getElementsByTagName('body');
+  document.body.appendChild(table);
+  var trLabels = document.createElement('tr');
+  table.appendChild(trLabels);
+  var td = document.createElement('td');
+  td.innerText = 'Items: ';
+  trLabels.appendChild(td);
+  for (var i = 0; i < imageArray.length; i++) {
+    var td = document.createElement('td');
+    td.setAttribute('class', 'nameRow')
+    td.innerText = imageArray[i].name;
+    trLabels.appendChild(td);
+  }
+  var tr = document.createElement('tr');
+  tr.setAttribute('class', 'topRow');
+  table.appendChild(tr);
+  var td = document.createElement('td');
+  td.innerText = 'Times Shown: ';
+  tr.appendChild(td);
+  for (var i = 0; i < imageArray.length; i++) {
+    var td = document.createElement('td');
+    td.setAttribute('class', 'timesShown');
+    td.innerText = imageArray[i].shown;
+    tr.appendChild(td);
+  }
+  var tr2 = document.createElement('tr');
+  tr2.setAttribute('class', 'botRow');
+  table.appendChild(tr2);
+  var td = document.createElement('td');
+  td.innerText = 'Times Clicked: ';
+  tr2.appendChild(td);
+  for (var i = 0; i < imageArray.length; i++) {
+    var td2 = document.createElement('td');
+    td2.setAttribute('class', 'timesClicked');
+    td2.innerText = imageArray[i].clicks;
+    tr2.appendChild(td2);
+  }
+}
 imagePicker();
