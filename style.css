@@ -18,6 +18,7 @@ div {
 }
 table {
   margin: auto;
+  margin-bottom: 5%;
   border: 2px solid black;
 }
 td {
@@ -35,4 +36,9 @@ td {
 }
 .nameRow {
   font-weight: bold;
+}
+
+canvas {
+  margin: auto;
+  padding: 5%;
 }

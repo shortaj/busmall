@@ -4,6 +4,8 @@ var counter = 0
 var imageArray = [];
 var imgHtmlArray = [];
 var numbers = [];
+var barChartImageArrayPercent = [];
+var barChartImageArrayName = [];
 var left = document.getElementById('left');
 var center = document.getElementById('center');
 var right = document.getElementById('right');
@@ -120,6 +122,7 @@ function Product(productInfo) {
   this.filepath = productInfo.filepath;
   this.name = productInfo.name;
   this.class = productInfo.class;
+  this.percent = productInfo.percent || 0;
   imageArray.push(this);
 }
 function removeChildren() {
@@ -239,5 +242,64 @@ function tableCreator() {
     td2.innerText = imageArray[i].clicks;
     tr2.appendChild(td2);
   }
+  pruneImageArray();
+}
+function percentCalc() {
+  for (var i = 0; i < imageArray.length; i++) {
+    imageArray[i].percent = imageArray[i].clicks / imageArray[i].shown * 100;
+    console.log('percentCalc ' + i + ': ' + imageArray[i].percent);
+  }
+}
+function sortImageArray() {
+  imageArray.sort(function (a, b) {
+    if (a.percent > b.percent) {
+      return -1;
+    }
+    if (a.percent < b.percent) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+function pruneImageArray() {
+  percentCalc();
+  sortImageArray();
+  for (var i = 0; i < 5; i++) {
+    barChartImageArrayPercent.push(imageArray[i].percent);
+    barChartImageArrayName.push(imageArray[i].name);
+  }
+  console.log('Percent: ' + barChartImageArrayPercent);
+  barChartCreator();
+}
+
+function barChartCreator() {
+  var barChart = document.getElementById('barChart').getContext('2d');
+  var myChart = new Chart(barChart, {
+    type: 'bar',
+    data: {
+      labels: barChartImageArrayName,
+      datasets: [{
+        label: [],
+        data: barChartImageArrayPercent,
+        backgroundColor: '#286bd6',
+        borderColor: '#154187',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      },
+      legend: {
+        display: false,
+      }
+    }
+  });
 }
 imagePicker();
