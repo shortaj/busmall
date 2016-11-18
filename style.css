@@ -1,18 +1,44 @@
-.hiddenimage {
-  display: none;
+p {
+  text-align: center;
+  padding: 5%;
+}
+.clickables {
+  margin: auto;
+  width: 80%;
 }
 div {
-  width: 30%;
+  display: inline-block;
   border: 1px solid black;
-  height: 30%;
-}
-div #left {
-  float: left;
-}
-div #right {
-  float: right;
+  width: 300px;
+  height: 300px;
 }
 .image {
   height: 100%;
   width: 100%;
+}
+table {
+  margin: auto;
+  margin-bottom: 5%;
+  border: 2px solid black;
+}
+td {
+  border: 1px solid black;
+}
+.nameRow {
+  width: 50px;
+  text-align: center;
+}
+.timesShown {
+  text-align: right;
+}
+.timesClicked {
+  text-align: right;
+}
+.nameRow {
+  font-weight: bold;
+}
+
+canvas {
+  margin: auto;
+  padding: 5%;
 }

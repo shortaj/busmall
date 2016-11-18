@@ -9,14 +9,9 @@
   <body>
     <header>
       <p>
-        "This is a clickable image questionaire. Just click on the image you like in the below set of 3. There will be 25 sets in total. It will start as soon as you begin clicking. Enjoy."
+        This is a clickable image questionaire. Just click on the image you like in the below set of 3. There will be 25 sets in total. It will start as soon as you begin clicking. Enjoy.
       </p>
     </header>
-    <section class="status">
-      <p>
-        "You are currently on set " <span id="statusCounter"></span>"/25."
-      </p>
-    </section>
     <section class="clickables">
       <div id="left" class="imageset">
 
@@ -28,6 +23,10 @@
 
       </div>
     </section>
+    <section>
+      <canvas id="barChart" width="600" height="400"></canvas>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
